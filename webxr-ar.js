@@ -97,9 +97,9 @@ function main() {
 
 
   enterVR = function enterVR() {
-    alert("entering");
+    console.log("entering immersive session");
     navigator.xr.requestSession("immersive-ar").then((s) => {
-      alert("inside");
+      console.log("inside immersive session");
       xrSession = s;
       xrSession.requestReferenceSpace("local")
       .then((referenceSpace) => {
