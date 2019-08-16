@@ -218,6 +218,7 @@ function renderVR(gl, programInfo, buffers, deltaTime) {
     for (eye of pose.views) {
       renderEye(gl, programInfo, buffers, eye, rotationMatrix)
     }
+    gl.finish();
 }
 
 // entry point for non-WebVR rendering
