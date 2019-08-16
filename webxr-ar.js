@@ -165,9 +165,9 @@ function initBuffers(gl) {
   // Now create an array of positions for the triangle.
 
   const positions = [
-    -1.0, -0.57, -0.5,
-     1.0, -0.57, -0.5,
-     0,    0.86, -0.5,
+    -0.10, -0.057, -0.05,
+     0.10, -0.057, -0.05,
+     0,    0.086, -0.05,
   ];
 
   // Now pass the list of positions into WebGL to build the
@@ -199,7 +199,7 @@ function initBuffers(gl) {
 // entry point for WebVR, called by vrCallback()
 function renderVR(gl, programInfo, buffers, deltaTime) {
     gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.clearColor(0., 0., 0., 1.0);  // Clear to grey, fully opaque
+    gl.clearColor(0., 0., 0., 0.0);  // Clear to grey, fully opaque
     gl.clearDepth(1.0);                 // Clear everything
     gl.enable(gl.DEPTH_TEST);           // Enable depth testing
     gl.depthFunc(gl.LEQUAL);            // Near things obscure far things
@@ -221,7 +221,7 @@ function renderVR(gl, programInfo, buffers, deltaTime) {
 // called by whatever mechanism (likely keyboard/mouse events)
 // you used before to trigger redraws
 function render(gl, programInfo, buffers, deltaTime) {
-    gl.clearColor(0., 0., 0., 1.0);  // Clear to grey, fully opaque
+    gl.clearColor(0., 0., 0., 0.0);  // Clear to grey, fully opaque
     gl.clearDepth(1.0);                 // Clear everything
     gl.enable(gl.DEPTH_TEST);           // Enable depth testing
     gl.depthFunc(gl.LEQUAL);            // Near things obscure far things
@@ -296,7 +296,7 @@ function drawScene(gl, programInfo, buffers, projectionMatrix, viewMatrix) {
 
   mat4.translate(modelViewMatrix,     // destination matrix
                  modelViewMatrix,     // matrix to translate
-                 [-0.0, 0.0, -6.0]);  // amount to translate
+                 [-0.0, 0.0, -0.3]);  // amount to translate
 
   mat4.rotate(modelViewMatrix,  // destination matrix
               modelViewMatrix,  // matrix to rotate
