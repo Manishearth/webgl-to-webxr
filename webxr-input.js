@@ -169,9 +169,9 @@ function initBuffers(gl) {
   // Now create an array of positions for the triangle.
 
   const positions = [
-    -1.0, -0.57, -0.5,
-     1.0, -0.57, -0.5,
-     0,    0.86, -0.5,
+    -0.10, -0.057, -0.05,
+     0.10, -0.057, -0.05,
+     0,    0.086, -0.05,
   ];
 
   // Now pass the list of positions into WebGL to build the
