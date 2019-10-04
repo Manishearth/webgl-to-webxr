@@ -7,7 +7,7 @@ var enterVR;
 var xrInputSource;
 var xrTargetRay;
 const canvas = document.querySelector('#canvas');
-var rotationMatrix;
+var inputMatrix;
 
 main();
 
@@ -17,7 +17,7 @@ main();
 function main() {
   const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
 
-  rotationMatrix = mat4.create();
+  inputMatrix = mat4.create();
   // If we don't have a GL context, give up now
 
   if (!gl) {
@@ -217,10 +217,10 @@ function renderVR(gl, programInfo, buffers, deltaTime) {
 
     let input_pose = xr_frame.getPose(xrTargetRay, xrReferenceSpace);
     if (input_pose) {
-      rotationMatrix = input_pose.transform.matrix;
+      inputMatrix = input_pose.transform.matrix;
     }
     for (eye of pose.views) {
-      renderEye(gl, programInfo, buffers, eye, rotationMatrix)
+      renderEye(gl, programInfo, buffers, eye, inputMatrix)
     }
     gl.finish();
 }
@@ -264,7 +264,7 @@ function render(gl, programInfo, buffers, deltaTime) {
     drawScene(gl, programInfo, buffers, projectionMatrix, viewMatrix);
 }
 
-function renderEye(gl, programInfo, buffers, eye, r) {
+function renderEye(gl, programInfo, buffers, eye, input) {
     let width = canvas.width;
     let height = canvas.height;
     let projection, view;
@@ -285,13 +285,13 @@ function renderEye(gl, programInfo, buffers, eye, r) {
     // }
     // we don't want auto-rotation in VR mode, so we directly
     // use the view matrix
-    drawScene(gl, programInfo, buffers, projection, view, r);
+    drawScene(gl, programInfo, buffers, projection, view, input);
 }
 
 //
 // Draw the scene.
 //
-function drawScene(gl, programInfo, buffers, projectionMatrix, viewMatrix, r) {
+function drawScene(gl, programInfo, buffers, projectionMatrix, viewMatrix, input) {
 
 
   // Set the drawing position to the "identity" point, which is
@@ -300,15 +300,11 @@ function drawScene(gl, programInfo, buffers, projectionMatrix, viewMatrix, r) {
 
 
 
-  if (r) {
+  if (input) {
     // premultiply rotation matrix
-    mat4.multiply(modelViewMatrix, r, modelViewMatrix);
+    mat4.multiply(modelViewMatrix, input, modelViewMatrix);
     // Now move the drawing position a bit to where we want to
     // start drawing the square.
-
-    mat4.translate(modelViewMatrix,     // destination matrix
-                   modelViewMatrix,     // matrix to translate
-                   [-0.0, 0.0, -6.0]);  // amount to translate
   } else {
 
     // Now move the drawing position a bit to where we want to
