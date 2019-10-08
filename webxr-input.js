@@ -131,7 +131,7 @@ function main() {
           // render scene
           renderVR(gl, programInfo, buffers, deltaTime);
       };
-      xrInputSource = xrSession.getInputSources()[0];
+      xrInputSource = xrSession.inputSources[0];
       xrTargetRay = xrInputSource.targetRaySpace;
       // register callback
       xrSession.requestAnimationFrame(vrCallback);
